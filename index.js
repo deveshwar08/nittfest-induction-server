@@ -3,7 +3,9 @@ const cookieParser = require('cookie-parser');
 const httplogger = require('./middleware/httplogger');
 const cors = require("cors");
 require('dotenv').config();
-const router = require('./routes/auth.route');
+const authRouter = require('./routes/auth.route');
+const preferenceRouter = require('./routes/preferences.route');
+const questionRouter = require('./routes/questions.route');
 
 const db = require("./models");
 const logger = require('./utils/logger');
@@ -25,8 +27,9 @@ app.use(httplogger);
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(cookieParser());
-app.use('/', router);
-
+app.use('/', authRouter);
+app.use('/', questionRouter);
+app.use('/', preferenceRouter);
 
 const port = 10000;
 app.listen(port, () => {
