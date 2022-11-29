@@ -22,7 +22,7 @@ db.sequelize.authenticate().then(() => {
 
 const app = express();
 
-app.use(cors());
+app.use(cors({credentials: true, origin: process.env.FRONTEND_URL}));
 app.use(httplogger);
 app.use(express.static('./public'));
 app.use(express.json());
