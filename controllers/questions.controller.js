@@ -4,8 +4,9 @@ const db = require("../models/index");
 module.exports = {
     getQuestions: async (req, res) => {
         try {
+            const token = req.cookies.auth_token;
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-            const email = decodedToken.email;
+            const email = decodedToken.user_email;
             const user = await db.users.findOne({ where: { email: email } });
             if (!user) {
                 res.status(401).json({
@@ -25,8 +26,9 @@ module.exports = {
     },
     postQuestions: async (req, res) => {
         try {
+            const token = req.cookies.auth_token;
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-            const email = decodedToken.email;
+            const email = decodedToken.user_email;
             const user = await db.users.findOne({ where: { email: email } });
             if (!user) {
                 res.status(401).json({
@@ -37,16 +39,17 @@ module.exports = {
             const domain = await db.domains.findOne({ where: { domain: req.body.domain } });
             const retrievedAnswers = await db.answers.findAll({ where: { domain_id: domain.id, user_id: user.id, } });
             if (retrievedAnswers.length == 0) {
-                for (const ans in userAnswers) {
+                userAnswers.forEach(async (ans) => {
                     const answer = await db.answers.create({
                         domain_id: domain.id,
                         user_id: user.id,
                         question_id: ans.question_id,
                         answer: ans.answer
                     });
-                }
+                })
+
             } else {
-                for (const ans in userAnswers) {
+                userAnswers.forEach(async (ans) => {
                     const retrievedAns = await db.answers.findOne({ where: { domain_id: domain.id, user_id: user.id, question_id: ans.questionId } });
                     if (!retrievedAns) {
                         const answer = await db.answers.create({
@@ -59,7 +62,7 @@ module.exports = {
                         retrievedAns.answer = userAnswers.answer;
                         retrievedAns.save();
                     }
-                }
+                });
             }
             const questions = await db.questions.findAll({ where: { domain_id: req.body.domain } });
             const answers = await db.answers.findAll({ where: { domain_id: req.body.domain, user_id: user.id, } });

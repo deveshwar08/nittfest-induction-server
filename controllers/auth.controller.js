@@ -34,25 +34,11 @@ module.exports = {
             params.append("code", String(req.body.body));
             params.append("redirect_uri", process.env.REDIRECT_URL);
             console.log(params);
-            // const parameters = {
-            //     "client_id": process.env.CLIENT_ID,
-            //     "client_secret": process.env.CLIENT_SECRET,
-            //     "grant_type": "authorization_code",
-            //     "code": String(JSON.parse(req.body.body).code)
-            // }
-
-            // const responseToken = await axios.post("https://auth.delta.nitt.edu/api/oauth/token", params, {
-            //     headers: {
-            //         "Content-Type": "application/x-www-form-urlencoded"
-            //     }
-            // });
-            // console.log(responseToken);
             axios.post("https://auth.delta.nitt.edu/api/oauth/token", params, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
             }).then((resp) => {
-                // console.log("Data", resp);
                 axios.post(process.env.RESOURCE_ENDPOINT, {}, {
                     headers: {
                         "Authorization": "Bearer " + resp.data.access_token
@@ -60,9 +46,9 @@ module.exports = {
                 }).then(async (res) => {
                     const userDetails = res;
                     const isFirstYear = userDetails.data.email.split("@")[0][5] == 0 ? true : false;
-                    if (!isFirstYear) {
-                        res.stauts(401).json({ message: "User not first year" });
-                    }
+                    // if (!isFirstYear) {
+                    //     res.stauts(401).json({ message: "User not first year" });
+                    // }
                     const retrievedUser = await db.users.findOne({ where: { email: userDetails.data.email } });
 
                     if (!retrievedUser) {
@@ -71,7 +57,6 @@ module.exports = {
                             email: userDetails.data.email,
                             mobile_number: userDetails.data.phoneNumber,
                             gender: userDetails.data.gender,
-                            // department_id: getDepartmentId(userDetails.data.email),
                             department_id: userDetails.data.email.substring(1, 3),
                             fcm_token: "123",
                         });
@@ -81,7 +66,6 @@ module.exports = {
                         "user_name": userDetails.data.name,
                     };
                     const authToken = jwt.sign(payload, process.env.JWT_SECRET);
-                    // const authToken = signJWT({ name: userDetails.data.name, email: userDetails.data.email });
                     logger.info(`${userDetails.data.name} user logged in`);
                     response.cookie('auth_token', authToken, { maxAge: 7 * 24 * 60 * 60 * 1000 });
                     response.status(200).json({
@@ -90,14 +74,8 @@ module.exports = {
                         phoneNumber: userDetails.data.phoneNumber,
                         gender: userDetails.data.gender
                     });
-                }).catch(err => console.log("ERR", err));
-            }).catch(err => console.log("ERR", err));
-            // const userDetails = await axios.post(process.env.RESOURCE_ENDPOINT, {}, {
-            //     headers: {
-            //         "Authorization": "Bearer " + tokenResponse.data.access_token
-            //     }
-            // });
-
+                }).catch(err => logger.error("Error fetching resource", err));
+            }).catch(err => logger.error("Error fetching token", err));
         } catch (err) {
             logger.error("/dauth failed with error ", err);
             res.status(500).set({

@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER
             },
             answer: {
-                type: DataTypes.STRING
+                type: DataTypes.TEXT
             },
         });
     Answer.associate = function (models) {
