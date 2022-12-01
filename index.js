@@ -33,5 +33,5 @@ app.use('/', preferenceRouter);
 
 const port = 10000;
 app.listen(port, () => {
-    console.log("App is listening to port ", port);
+    logger.info("App is listening to port ", port);
 });

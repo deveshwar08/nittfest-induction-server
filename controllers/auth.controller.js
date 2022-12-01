@@ -26,14 +26,12 @@ module.exports = {
     dauthCallback: async (req, response) => {
 
         try {
-            console.log(req.body.body);
             const params = new URLSearchParams();
             params.append("client_id", process.env.CLIENT_ID);
             params.append("client_secret", process.env.CLIENT_SECRET);
             params.append("grant_type", "authorization_code");
             params.append("code", String(req.body.body));
             params.append("redirect_uri", process.env.REDIRECT_URL);
-            console.log(params);
             axios.post("https://auth.delta.nitt.edu/api/oauth/token", params, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"

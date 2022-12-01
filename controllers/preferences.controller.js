@@ -22,7 +22,6 @@ module.exports = {
                 return domain.domain;
             }));
             const response = await prefs;
-            console.log(response);
             res.status(200).json({
                 preferences: response
             });
@@ -53,9 +52,7 @@ module.exports = {
                         user_id: user.id
                     });
                 } else {
-                    console.log(retrievedPref);
                     retrievedPref.preference_no = pref.preference_no;
-                    console.log(retrievedPref);
                     retrievedPref.save();
                 }
             });

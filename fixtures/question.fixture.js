@@ -1,53 +1,28 @@
 const questions = [
     {
-        "question": "Are you interested in MoCing ?",
-        "domain_id": 4,
+        "question": "Tell about yourself in one sentence",
+        "domain_id": 1,
     },
     {
-        "question": "Who would you like to see at "
-        + "NITTFEST this year as a judge or guest?",
-        "domain_id": 4,
+        "question": "what are your Strengths and weaknesses?",
+        "domain_id": 1,
     },
     {
-        "question": "What ideas you have for promoting "
-        + "NITTFEST other than sharing online posts?",
-        "domain_id": 4,
+        "question": "which quality of You think ,that will suit ambience work ",
+        "domain_id": 1,
     },
     {
-        "question": "Ideate a few tagline suggestions",
-        "domain_id": 4,
+        "question": "Do you have any previous experience on Arts&crafts"
+        + " ,if yes , explain in brief.",
+        "domain_id": 1,
     },
     {
-        "question": "Are you interested in MoCing? "
-        + "(Yes/No/Interested in Trying) ",
-        "domain_id": 4,
+        "question": "Interesting quality or fact about u .",
+        "domain_id": 1,
     },
     {
-        "question": "What do you think are some exciting things we "
-        + "can do to hype up the fest? ",
-        "domain_id": 4,
-    },
-    {
-        "question": "Write a short para (150 words) on how you "
-        + "imagine the general atmosphere of the fest would be? ",
-        "domain_id": 4,
-    },
-    {
-        "question": "What do you think are the qualities of a good "
-        + "Master of Ceremonies (Presenter/Host) of an event? ",
-        "domain_id": 4,
-    },
-    {
-        "question": "Give a clever and apt alternative title to "
-        + "the Fest that captures the spirit of the competition "
-        + "between the departments. ",
-        "domain_id": 4,
-    },
-    {
-        "question": "An imminent personality has come down as "
-        + "a guest. How would you go about preparing "
-        + "for an interview with them? ",
-        "domain_id": 4,
+        "question": "On a scale of 10 , Rate your patience and hardwork respectively",
+        "domain_id": 1,
     },
     {
         "question": "What are the clubs/teams you are part of? ",
@@ -99,89 +74,65 @@ const questions = [
         "domain_id": 2,
     },
     {
-        "question": "What do you bring to the marketing team that "
-        + "makes you a valuable asset? (Word Limit: 100) ",
-        "domain_id": 6,
+        "question": "What do you know about NITTFEST?",
+        "domain_id": 3,
     },
     {
-        "question": "List the clubs and teams that you are "
-        + "currently part of. ",
-        "domain_id": 6,
+        "question": "Why Events team?",
+        "domain_id": 3,
     },
     {
-        "question": "What do you expect to achieve by joining "
-        + "NITTFest Marketing Team ? (Word Limit: 100) ",
-        "domain_id": 6,
+        "question": "If you had the opportunity to choose the theme for NITTFEST'23, What would you choose and why?",
+        "domain_id": 3,
     },
     {
-        "question": "Select a brand of your choice. Briefly "
-        + "explain how you will market it. (Word Limit: 150) ",
-        "domain_id": 6,
+        "question": "If given a chance, what would you play in NITT's clock tower everyday?",
+        "domain_id": 3,
     },
     {
-        "question": "How will you sell an umbrella with "
-        + "holes to a person drenched in rain ? (Word Limit: 150) ",
-        "domain_id": 6,
+        "question": "If you were to choose one superpower, what would you choose?",
+        "domain_id": 3,
     },
     {
-        "question": "If you were given the task of rebranding Starbucks "
-        + "company for the Cryptocurrency industry, what would "
-        + "the headline of the press release be? ",
-        "domain_id": 6,
+        "question": "State an instance wherein you thought on your feet and made quick decisions.",
+        "domain_id": 3,
     },
     {
-        "question": "Would you rather be able to see 10 minutes into your own "
-        + "future or 10 minutes into the future of anyone but yourself?"
-        + "Explain your choice. (Word Limit: 100) ",
-        "domain_id": 6,
+        "question": "If you had an opportunity to change a mistake from your past, what would you change and why?",
+        "domain_id": 3,
     },
     {
-        "question": "What makes you a good marketing team member ?",
-        "domain_id": 6,
+        "question": "What will you bring to the team if you are inducted?",
+        "domain_id": 3,
     },
     {
-        "question": "Write about a time where you worked with a "
-        + "team to complete a task successfully. What were your "
-        + "contributions ? (In 150 words) ",
-        "domain_id": 6,
+        "question": "If you could remove one color in the whole world, what would it be and why?",
+        "domain_id": 4,
     },
     {
-        "question": "Name few companies that you would like "
-        + "to see at NITTFEST'22 ",
-        "domain_id": 6,
+        "question": "Where would you like to time travel: back to the past or to the future?",
+        "domain_id": 4,
     },
     {
-        "question": "Give 5 creative ways to use a broken tree branch ",
-        "domain_id": 6,
+        "question": "What does the word 'ok' mean to you?",
+        "domain_id": 4,
     },
     {
-        "question": "What do you expect to achieve by joining NMT? ",
-        "domain_id": 6,
+        "question": "If you were offered to know the information of only one of the following, what would you choose? \n a). When(time and date) would you die? \nb). How (incident)would you die?",
+        "domain_id": 4,
     },
     {
-        "question": "Tell about yourself in one sentence",
-        "domain_id": 1,
+        "question": "How would you describe the color yellow to a blind person and the sound of nature (breeze, raindrops and seawaves) to a deaf person?",
+        "domain_id": 4,
     },
     {
-        "question": "what are your Strengths and weaknesses?",
-        "domain_id": 1,
+        "question": "What would you do if the judge for an event is late?"
+        + "can do to hype up the fest? ",
+        "domain_id": 4,
     },
     {
-        "question": "which quality of You think ,that will suit ambience work ",
-        "domain_id": 1,
-    },
-    {
-        "question": "Do you have any previous experience on Arts&crafts"
-        + " ,if yes , explain in brief.",
-        "domain_id": 1,
-    },
-    {
-        "question": "Interesting quality or fact about u .",
-        "domain_id": 1,
-    },
-    {
-        "question": "On a scale of 10 , Rate your patience and hardwork respectively",
-        "domain_id": 1,
+        "question": "A guest is asking for refreshments late in the night. Where would you get it from?",
+        "domain_id": 4,
     },
     {
         "question": "Which teams are you currently a part of?",
@@ -196,68 +147,48 @@ const questions = [
         "domain_id": 5,
     },
     {
-        "question": "What made you choose NITTFEST Events as one of your preferences?",
-        "domain_id": 3,
+        "question": "Which video editing software or video graphics software are you familiar with?",
+        "domain_id": 5,
     },
     {
-        "question": "State an instance wherein you thought on your feet"
-        + " and made quick decisions.",
-        "domain_id": 3,
+        "question": "On a scale of 10, Rate your patience and hard work!",
+        "domain_id": 5,
     },
     {
-        "question": "From the previous editions of NITTFEST, choose one "
-        + "cluster and explain one or two events under it. ",
-        "domain_id": 3,
+        "question": "What do you bring to the marketing team that makes you a valuable asset? ",
+        "domain_id": 6,
     },
     {
-        "question": "Assume you're in charge of an event taking place"
-        + " on the CEESAT ground. "
-        + "A bull enters the ring in the middle of the event. What will you do? ",
-        "domain_id": 3,
+        "question": "Select a brand of your choice. Briefly explain how you will market it. ",
+        "domain_id": 6,
     },
     {
-        "question": "A time machine is given to you. You may only use "
-        + "it for silly purposes. "
-        + "What would be the craziest thing you could do with it?",
-        "domain_id": 3,
+        "question": "How will you sell an umbrella with holes to a person drenched in rain ? ",
+        "domain_id": 6,
     },
     {
-        "question": "You accidently ate the sun for breakfast,"
-        + "and now the entire world is blaming you,",
-        "domain_id": 3,
+        "question": "If you were given the task of rebranding Starbucks company for the Cryptocurrency industry, what would the headline of the press release be? ",
+        "domain_id": 6,
     },
     {
-        "question": "Why should we induct you into the team?",
-        "domain_id": 3,
+        "question": "Would you rather be able to see 10 minutes into your own future or 10 minutes into the future of anyone but yourself? Explain your choice. ",
+        "domain_id": 6,
     },
     {
-        "question": "What do you think NITTFEST is? ",
-        "domain_id": 3,
+        "question": "Write about a time when you worked with a team to complete a task successfully. What were your contributions ? ",
+        "domain_id": 6,
     },
     {
-        "question": "What made you choose NITTFEST Events "
-        + "as one of your preferences? ",
-        "domain_id": 3,
+        "question": "Name a few companies that you would like to see at NITTFEST'23 .",
+        "domain_id": 6,
     },
     {
-        "question": "State an instance wherein you thought on "
-        + "your feet and made quick decisions. ",
-        "domain_id": 3,
+        "question": "Give 5 creative ways to use a broken tree branch ",
+        "domain_id": 6,
     },
     {
-        "question": "Ideate an online event that we can have "
-        + "during NITTFEST. ",
-        "domain_id": 3,
-    },
-    {
-        "question": "A time machine is given to you. You may "
-        + "only use it for silly purposes. What would "
-        + "be the craziest thing you could do with it? ",
-        "domain_id": 3,
-    },
-    {
-        "question": "Why should we induct you into the team? ",
-        "domain_id": 3,
+        "question": "What do you expect to achieve by joining NITTFEST Marketing Team ?",
+        "domain_id": 6,
     },
 ];
 

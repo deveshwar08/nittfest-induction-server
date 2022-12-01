@@ -13,11 +13,16 @@ module.exports = {
                     message: "User not found"
                 })
             }
-            const questions = await db.questions.findAll({ where: { domain_id: req.body.domain } });
-            const answers = await db.answers.findAll({ where: { domain_id: req.body.domain, userId: user.id } });
+            const domain = await db.domains.findOne({ where: { domain: req.query.domain } });
+            const questions = await db.questions.findAll({ where: { domain_id: domain.id } });
+            const answers = Promise.all(questions.map(async (ques) => {
+                const ans = await db.answers.findOne({ where: { question_id: ques.id, user_id: user.id } });
+                return ans;
+            }));
+            const responseAnswers = await answers;
             res.status(200).json({
                 questions: questions,
-                answers: answers
+                answers: responseAnswers,
             });
         } catch (err) {
             logger.error("/get Questions failed with error ", err.Message);
@@ -35,41 +40,39 @@ module.exports = {
                     message: "User not found"
                 })
             }
-            const userAnswers = req.body.answers;
-            const domain = await db.domains.findOne({ where: { domain: req.body.domain } });
-            const retrievedAnswers = await db.answers.findAll({ where: { domain_id: domain.id, user_id: user.id, } });
-            if (retrievedAnswers.length == 0) {
-                userAnswers.forEach(async (ans) => {
-                    const answer = await db.answers.create({
-                        domain_id: domain.id,
-                        user_id: user.id,
-                        question_id: ans.question_id,
-                        answer: ans.answer
-                    });
-                })
+            const userAnswers = req.body.body['answers'];
+            const domain = await db.domains.findOne({ where: { domain: req.body.body['domain'] } });
+            const questions = await db.questions.findAll({ where: { domain_id: domain.id }});
+            questions.forEach(async (ques) => {
+                for(let i = 0;i < userAnswers.length; i++){
+                    if(userAnswers[i].question_id == ques.id){
+                        const ans = await db.answers.findOne({ where: { question_id: ques.id, user_id: user.id}});
+                        if(ans){
+                            ans.update({
+                                answer: userAnswers[i].answer
+                            });
+                        } else {
+                            const answer = await db.answers.create({
+                                domain_id: domain.id,
+                                user_id: user.id,
+                                question_id: userAnswers[i].question_id,
+                                answer: userAnswers[i].answer
+                            });
+                        }
 
-            } else {
-                userAnswers.forEach(async (ans) => {
-                    const retrievedAns = await db.answers.findOne({ where: { domain_id: domain.id, user_id: user.id, question_id: ans.questionId } });
-                    if (!retrievedAns) {
-                        const answer = await db.answers.create({
-                            domain_id: domain.id,
-                            user_id: user.id,
-                            question_id: ans.question_id,
-                            answer: ans.answer
-                        });
-                    } else {
-                        retrievedAns.answer = userAnswers.answer;
-                        retrievedAns.save();
                     }
-                });
-            }
-            const questions = await db.questions.findAll({ where: { domain_id: req.body.domain } });
-            const answers = await db.answers.findAll({ where: { domain_id: req.body.domain, user_id: user.id, } });
+                }
+            });
+            const responseQuestions = await db.questions.findAll({ where: { domain_id: domain.id } });
+            const retrievedAnswers = Promise.all(questions.map(async (ques) => {
+                const ans = await db.answers.findOne({ where: { question_id: ques.id, user_id: user.id } });
+                return ans;
+            }));
+            const responseAnswers = await retrievedAnswers;
             res.status(200).json({
                 message: "Answers updated successfully",
-                answers: answers,
-                questions: questions
+                answers: responseAnswers,
+                questions: responseQuestions
             })
         } catch (err) {
             logger.error("/post Answers failed with error ", err.Message);
