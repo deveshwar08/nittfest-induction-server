@@ -24,7 +24,7 @@ module.exports = {
         return 1;
     },
     dauthCallback: async (req, response) => {
-
+        console.log(process.env.REDIRECT_URL);
         try {
             const params = new URLSearchParams();
             params.append("client_id", process.env.CLIENT_ID);

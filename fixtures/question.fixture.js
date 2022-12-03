@@ -4,73 +4,27 @@ const questions = [
         "domain_id": 1,
     },
     {
-        "question": "what are your Strengths and weaknesses?",
-        "domain_id": 1,
-    },
-    {
-        "question": "which quality of You think ,that will suit ambience work ",
-        "domain_id": 1,
-    },
-    {
-        "question": "Do you have any previous experience on Arts&crafts"
-        + " ,if yes , explain in brief.",
-        "domain_id": 1,
-    },
-    {
-        "question": "Interesting quality or fact about u .",
-        "domain_id": 1,
-    },
-    {
-        "question": "On a scale of 10 , Rate your patience and hardwork respectively",
-        "domain_id": 1,
-    },
-    {
-        "question": "What are the clubs/teams you are part of? ",
+        "question": "What perks can you gain by being part of NOC?",
         "domain_id": 2,
     },
     {
-        "question": "What measures will you take before conducting an "
-        + "offline event to ensure Covid19 protocols are "
-        + "followed? (In detail ) ",
+        "question": "Why do you want to be part of OC?",
         "domain_id": 2,
     },
     {
-        "question": "Were you part of the pre event? If yes, elaborate "
-        + "on your contributions.",
+        "question": "Explain NITTFEST using five words.",
         "domain_id": 2,
     },
     {
-        "question": "How NOC differs from OC of other fests? ",
+        "question": "How NOC differs from OC of other fests?",
         "domain_id": 2,
     },
     {
-        "question": "What perks can you gain by being part of NOC? ",
+        "question": "What can you contribute to the team?",
         "domain_id": 2,
     },
     {
-        "question": "Who is better, Jack of All trades or Master of "
-        + "One? State reasons to support your views.",
-        "domain_id": 2,
-    },
-    {
-        "question": "Explain NITTFEST using five words. ",
-        "domain_id": 2,
-    },
-    {
-        "question": "Why do you want to be part of OC? ",
-        "domain_id": 2,
-    },
-    {
-        "question": "What can you contribute to the team? ",
-        "domain_id": 2,
-    },
-    {
-        "question": "Suggest a theme for NITTFEST. ",
-        "domain_id": 2,
-    },
-    {
-        "question": "Who is better, Jack of all trades or Master "
-        + "of One? State reason to support your views. ",
+        "question": "Who is better, Jack of All trades or Master of One? State reasons to support your views",
         "domain_id": 2,
     },
     {
