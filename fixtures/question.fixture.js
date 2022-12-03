@@ -1,6 +1,26 @@
 const questions = [
     {
-        "question": "Tell about yourself in one sentence",
+        "question": "Do you have any previous experience on Arts&Crafts, If yes, explain in brief.",
+        "domain_id": 1,
+    },
+    {
+        "question": "Which quality of a person, you think will suit for ambience works.",
+        "domain_id": 1,
+    },
+    {
+        "question": "Ideate a theme for the upcoming edition of NITTFEST, and list some of the ambience installations that can be done.",
+        "domain_id": 1,
+    },
+    {
+        "question": "What's your favourite colour, and why?",
+        "domain_id": 1,
+    },
+    {
+        "question": "On the scale of 1 to 10, Rate your patience and hardwork respectively.",
+        "domain_id": 1,
+    },
+    {
+        "question": "Do you prefer work alone or in a team?",
         "domain_id": 1,
     },
     {

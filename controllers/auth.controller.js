@@ -24,7 +24,6 @@ module.exports = {
         return 1;
     },
     dauthCallback: async (req, response) => {
-        console.log(process.env.REDIRECT_URL);
         try {
             const params = new URLSearchParams();
             params.append("client_id", process.env.CLIENT_ID);
@@ -32,6 +31,7 @@ module.exports = {
             params.append("grant_type", "authorization_code");
             params.append("code", String(req.body.body));
             params.append("redirect_uri", process.env.REDIRECT_URL);
+
             axios.post("https://auth.delta.nitt.edu/api/oauth/token", params, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -72,11 +72,14 @@ module.exports = {
                         phoneNumber: userDetails.data.phoneNumber,
                         gender: userDetails.data.gender
                     });
-                }).catch(err => logger.error("Error fetching resource", err));
+                }).catch(err => {
+                    response.status(400);
+                    logger.error("Error fetching resource", err)
+                });
             }).catch(err => logger.error("Error fetching token", err));
         } catch (err) {
             logger.error("/dauth failed with error ", err);
-            res.status(500).set({
+            response.status(500).set({
                 "X-Error": "An unexpected error occurred while authentication"
             }).json({ message: "An unexpected error occurred while authentication" });
         }
