@@ -43,10 +43,11 @@ module.exports = {
                     }
                 }).then(async (res) => {
                     const userDetails = res;
-                    const isFirstYear = userDetails.data.email.split("@")[0][5] == 0 ? true : false;
-                    // if (!isFirstYear) {
-                    //     res.stauts(401).json({ message: "User not first year" });
-                    // }
+                    const isFirstYear = userDetails.data.email.split("@")[0][5] == 2 ? true : false;
+                    const roll = userDetails.data.email.split("@")[0];
+                    if (!isFirstYear && !(roll == 106120029 || roll == 103120011 || roll == 103120021 || rol == 103120117)) {
+                        res.stauts(401).json({ message: "User not first year" });
+                    }
                     const retrievedUser = await db.users.findOne({ where: { email: userDetails.data.email } });
 
                     if (!retrievedUser) {
