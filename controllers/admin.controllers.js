@@ -1,8 +1,8 @@
 const db = require("../models/index");
-const { convertArrayToCSV } = require('convert-array-to-csv');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const path = require("path");
+const XlsxPopulate = require('xlsx-populate2');
 
 const get_answers = async (questions, user) => {
     const userDetails = [user.name, user.email, user.mobile_number];
@@ -31,7 +31,7 @@ const getPreferences = async (req, res) => {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         const email = decodedToken.user_email;
         const roll = email.split("@")[0];
-        if (roll == 106120029 || roll == 103120011 || roll == 103120021 || rol == 103120117) {
+        if (roll == 106120029 || roll == 103120011 || roll == 103120021 || roll == 103120117) {
             const users = await db.users.findAll();
             const user_pref = Promise.all(users.map(async (user) => {
                 let preferences = await db.preferences.findAll({ where: { user_id: user.id } });
@@ -48,19 +48,21 @@ const getPreferences = async (req, res) => {
             preference.unshift(header);
 
             try {
-                const csvFromArrayOfArrays = convertArrayToCSV(preference, {
-                    separator: ';'
-                });
-                await fs.writeFile(path.join(__dirname, '..', '/downloads/preferences.csv'), csvFromArrayOfArrays, err => {
-                    console.log(err);
-                    res.status(200).sendFile(path.join(__dirname, '..', '/downloads/preferences.csv'));
-                });
+                XlsxPopulate.fromBlankAsync()
+                    .then(workbook => {
+                        // Modify the workbook.
+                        workbook.sheet(0).cell("A1").value(preference);
+                        // Write to file.
+                        return workbook.toFileAsync(path.join(__dirname, '..', "/downloads/preference.xlsx")).then(() => res.status(200).
+                            sendFile(path.join(__dirname, '..', "/downloads/preference.xlsx")));
+                    });
             } catch (err) {
-                res.status(500).send("Internal Server Error");
+                res.status(500).send("Error writing file");
             }
         }
+        else res.status(401).send("Unauthorized")
     } catch (err) {
-        res.status(401).send("Unauthorized");
+        res.status(500).send("Internal Server Error");
     }
 }
 
@@ -82,21 +84,22 @@ const getDomain = async (req, res) => {
             const answers = await getResponses(domain.id);
             answers.unshift(header);
             try {
-                const csvFromArrayOfArrays = convertArrayToCSV(answers, {
-                    separator: ';'
-                });
-                await fs.writeFile(path.join(__dirname, '..', `/downloads/${domain.domain}.csv`), csvFromArrayOfArrays, err => {
-                    console.log(err);
-                    res.status(200).sendFile(path.join(__dirname, '..', `/downloads/${domain.domain}.csv`));
-                });
+                XlsxPopulate.fromBlankAsync()
+                    .then(workbook => {
+                        // Modify the workbook.
+                        workbook.sheet(0).cell("A1").value(answers);
+                        // Write to file.
+                        return workbook.toFileAsync(path.join(__dirname, '..', `/downloads/${domain.domain}.xlsx`)).then(() => res.status(200).
+                            sendFile(path.join(__dirname, '..', `/downloads/${domain.domain}.xlsx`)));
+                    });
             } catch (err) {
-                console.log(err);
+                res.status(500).send("Error writing file");
             }
         } else {
             res.status(401).send("Unauthorized");
         }
     } catch (err) {
-        res.status(401).send("Unauthorized");
+        res.status(500).send("Internal Server Error");
     }
 }
 
@@ -106,10 +109,10 @@ const checkAdmin = async (req, res) => {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         const email = decodedToken.user_email;
         const roll = email.split("@")[0];
-        if (roll == 106120029 || roll == 103120011 || roll == 103120021 || rol == 103120117) {
+        if (roll == 106120029 || roll == 103120011 || roll == 103120021 || roll == 103120117) {
             res.status(200).send("Admin");
         }
-        res.status(401).send("Unauthorized");
+        else res.status(401).send("Unauthorized");
     } catch (err) {
         res.status(500).send("Internal Server Error");
     }
