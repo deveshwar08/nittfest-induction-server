@@ -6,7 +6,7 @@ require('dotenv').config();
 const authRouter = require('./routes/auth.route');
 const preferenceRouter = require('./routes/preferences.route');
 const questionRouter = require('./routes/questions.route');
-
+const adminRouter = require('./routes/admin.route');
 const db = require("./models");
 const logger = require('./utils/logger');
 db.sequelize.authenticate().then(() => {
@@ -30,6 +30,7 @@ app.use(cookieParser());
 app.use('/', authRouter);
 app.use('/', questionRouter);
 app.use('/', preferenceRouter);
+app.use('/', adminRouter);
 
 const port = 10000;
 app.listen(port, () => {
