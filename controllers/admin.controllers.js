@@ -4,25 +4,31 @@ const jwt = require('jsonwebtoken');
 const path = require("path");
 const XlsxPopulate = require('xlsx-populate2');
 
-const get_answers = async (questions, user) => {
-    const userDetails = [user.name, user.email, user.mobile_number];
+const getAnswers = async (questions, user) => {
     const answerPromise = Promise.all(questions.map(async (ques) => {
-        const ans = await db.answers.findOne({ where: { question_id: ques.id, user_id: user.id } });
-        return ans ? ans.answer : "";
+        const answer = await db.answers.findOne({ where: { question_id: ques.id, user_id: user.id } });
+        return answer ? answer.answer : "";
     }));
     const answers = await answerPromise;
-    return [...userDetails, ...answers];
+    return [...answers];
 }
 
 const getResponses = async (domain_id) => {
     const users = await db.users.findAll();
-    const user_resp = Promise.all(users.map(async (user) => {
+    const userResponsePromise = Promise.all(users.map(async (user) => {
         const questions = await db.questions.findAll({ where: { domain_id: domain_id } });
-        const ans = await get_answers(questions, user);
-        return ans;
+        const preference = await db.preferences.findOne({ where: { domain_id: domain_id, user_id: user.id } });
+        const ans = await getAnswers(questions, user);
+        let userDetails = [];
+        if (preference) {
+            userDetails = [user.name, user.email, user.mobile_number, preference.preference_no];
+        } else {
+            userDetails = [user.name, user.email, user.mobile_number, "No preference selected"];
+        }
+        return [...userDetails, ...ans];
     }));
-    const result = await user_resp;
-    return result;
+    const userResponse = await userResponsePromise;
+    return userResponse;
 }
 
 const getPreferences = async (req, res) => {
@@ -46,7 +52,6 @@ const getPreferences = async (req, res) => {
             const preference = await user_pref;
             const header = ["Name", "Email", "Mobile No", "Preference 1", "Preference 2", "Preference 3", "Preference 4", "Preference 5", "Preference 6"];
             preference.unshift(header);
-
             try {
                 XlsxPopulate.fromBlankAsync()
                     .then(workbook => {
@@ -80,7 +85,7 @@ const getDomain = async (req, res) => {
                 return q.question;
             }));
             const questions = await questionsPromise;
-            const header = ["Name", "Email", "Mobile No", ...questions];
+            const header = ["Name", "Email", "Mobile No", "Preference Number", ...questions];
             const answers = await getResponses(domain.id);
             answers.unshift(header);
             try {
