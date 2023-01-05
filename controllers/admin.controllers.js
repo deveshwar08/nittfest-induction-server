@@ -41,7 +41,7 @@ const getPreferences = async (req, res) => {
             const users = await db.users.findAll();
             const user_pref = Promise.all(users.map(async (user) => {
                 let preferences = await db.preferences.findAll({ where: { user_id: user.id } });
-                preferences.sort((a, b) => a.preference_no > b.preference_no);
+                preferences.sort((a, b) => { if(a.preference_no > b.preference_no) return 1; return -1;});
                 const pref = Promise.all(preferences.map(async preference => {
                     const domain = await db.domains.findOne({ where: { id: preference.domain_id } });
                     return domain.domain;
